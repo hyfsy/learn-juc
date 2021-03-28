@@ -1197,6 +1197,7 @@ public class JSR166TestCase extends TestCase {
      */
     public static final int SIZE = 32;
 
+    // custom class, not official
     static class Item {
         public int value;
 
