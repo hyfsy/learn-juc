@@ -13,7 +13,9 @@ public class Synchronized_PX {
     public static void main(String[] args) throws Exception {
         Thread.sleep(5000); //等待jvm开启偏向锁
         Object o = new Object();
+        // o.hashCode(); // 影响锁状态
         System.out.println(ClassLayout.parseInstance(o).toPrintable());
+        // o.hashCode(); // 影响锁状态
 
         synchronized (o) {
             System.out.println(ClassLayout.parseInstance(o).toPrintable());
