@@ -3,7 +3,7 @@ package com.hyf.juc.test;
 /**
  * CPU 合并写
  * <p>
- * L1缓存和ALU之间还有一个 WC Buffer，里面只有四个字节，满了后，一次性写到内存中
+ * L1缓存和ALU之间还有一个 WC Buffer，里面只有四个字节，满了后，一次性写到L2缓存中
  * <p>
  * 失败？
  *
