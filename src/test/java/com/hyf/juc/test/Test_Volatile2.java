@@ -1,8 +1,8 @@
 package com.hyf.juc.test;
 
 /**
- * 由于IDE自动创建一条名为Monitor Ctrl-Break的线程（从名字看应该是监控Ctrl-Break中断信号的）而导致while循环无法结束，
- * 改为大于2或者用Thread::join()方法代替可以解决该问题。
+ * 在非DEBUG环境，由于IDE自动创建一条名为Monitor Ctrl-Break的线程（从名字看应该是监控Ctrl-Break中断信号的）
+ * 而导致while循环无法结束，改为大于2或者用Thread::join()方法代替可以解决该问题。
  *
  * @author baB_hyf
  * @date 2021/04/19

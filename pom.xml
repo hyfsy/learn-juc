@@ -50,6 +50,13 @@
             <artifactId>jmh-generator-annprocess</artifactId>
             <version>1.23</version>
         </dependency>
+
+        <!-- 协程 -->
+        <dependency>
+            <groupId>co.paralleluniverse</groupId>
+            <artifactId>quasar-core</artifactId>
+            <version>0.7.10</version>
+        </dependency>
     </dependencies>
 
     <build>

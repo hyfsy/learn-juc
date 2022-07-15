@@ -14,11 +14,11 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConditionTest {
 
-    private int       flag = 1;
-    private Lock      lock = new ReentrantLock(); // 一把锁配多把钥匙
-    private Condition c1   = lock.newCondition();
-    private Condition c2   = lock.newCondition();
-    private Condition c3   = lock.newCondition();
+    private volatile int       flag = 1;
+    private          Lock      lock = new ReentrantLock(); // 一把锁配多把钥匙
+    private          Condition c1   = lock.newCondition();
+    private          Condition c2   = lock.newCondition();
+    private          Condition c3   = lock.newCondition();
 
     public static void main(String[] args) {
         ConditionTest conditionTest = new ConditionTest();
