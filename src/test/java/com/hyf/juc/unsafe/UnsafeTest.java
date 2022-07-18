@@ -3,6 +3,8 @@ package com.hyf.juc.unsafe;
 import org.junit.Test;
 import sun.misc.Unsafe;
 
+import java.lang.reflect.Field;
+
 /**
  * @author baB_hyf
  * @date 2021/01/06
@@ -115,13 +117,34 @@ public class UnsafeTest {
         // TestClass.s1 = "";
         // testClass.s2 = "";
 
-        long s1Offset = unsafe.staticFieldOffset(TestClass.class.getDeclaredField("s1"));
-        long s2Offset = unsafe.objectFieldOffset(TestClass.class.getDeclaredField("s2"));
+        Field s1Field = TestClass.class.getDeclaredField("s1");
+        Field s2Field = TestClass.class.getDeclaredField("s2");
+
+        // s1Field.setAccessible(true);
+        // try {
+        //     s1Field.set(TestClass.class, "new"); // cannot update s1
+        //     System.out.println(s1Field.get(testClass));
+        // } catch (Throwable e) {
+        //     System.out.println(e.getMessage());
+        // }
+        // s2Field.setAccessible(true);
+        // s2Field.set(testClass, "new"); // can update s2
+        // System.out.println(s2Field.get(testClass));
+
+        long s1Offset = unsafe.staticFieldOffset(s1Field);
+        long s2Offset = unsafe.objectFieldOffset(s2Field);
 
         // o == TestClass.class
-        Object o = unsafe.staticFieldBase(TestClass.class.getDeclaredField("s1"));
+        Object o = unsafe.staticFieldBase(s1Field);
+
         unsafe.putObject(o, s1Offset, "new");
         unsafe.putObject(testClass, s2Offset, "new");
+
+        System.out.println(TestClass.s1); // use is origin, but debug watch is updated
+        System.out.println(testClass.s2); // use is origin, but debug watch is updated
+
+        System.out.println(s1Field.get(TestClass.class)); // always updated
+        System.out.println(s2Field.get(testClass)); // always updated
 
         System.out.println(TestClass.s1);
         System.out.println(testClass.s2);
