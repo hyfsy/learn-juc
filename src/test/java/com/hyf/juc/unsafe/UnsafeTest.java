@@ -101,4 +101,37 @@ public class UnsafeTest {
         System.out.println("shift: " + shift);
         System.out.println("offset: " + offset);
     }
+
+    @Test
+    public void testFive() throws Exception {
+
+        Unsafe unsafe = UnSafeInstance.getInstance();
+
+        TestClass testClass = new TestClass();
+
+        System.out.println(TestClass.s1);
+        System.out.println(testClass.s2);
+
+        // TestClass.s1 = "";
+        // testClass.s2 = "";
+
+        long s1Offset = unsafe.staticFieldOffset(TestClass.class.getDeclaredField("s1"));
+        long s2Offset = unsafe.objectFieldOffset(TestClass.class.getDeclaredField("s2"));
+
+        // o == TestClass.class
+        Object o = unsafe.staticFieldBase(TestClass.class.getDeclaredField("s1"));
+        unsafe.putObject(o, s1Offset, "new");
+        unsafe.putObject(testClass, s2Offset, "new");
+
+        System.out.println(TestClass.s1);
+        System.out.println(testClass.s2);
+
+    }
+
+    public static class TestClass {
+        public static final String s1 = "xxx";
+        public final        String s2 = "xxx";
+        // public static String s1 = "xxx";
+        // public        String s2 = "xxx";
+    }
 }
