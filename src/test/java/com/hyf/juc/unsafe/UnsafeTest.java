@@ -157,4 +157,45 @@ public class UnsafeTest {
         // public static String s1 = "xxx";
         // public        String s2 = "xxx";
     }
+
+    // 引用类型为Object是没问题的？String类型就不行？
+    @Test
+    public void testSix() throws Exception {
+
+        Unsafe unsafe = UnSafeInstance.getInstance();
+
+        TestClass2 testClass2 = new TestClass2();
+
+        System.out.println(TestClass2.s1);
+        System.out.println(testClass2.s2);
+
+        Field s1Field = TestClass2.class.getDeclaredField("s1");
+        Field s2Field = TestClass2.class.getDeclaredField("s2");
+
+        long s1Offset = unsafe.staticFieldOffset(s1Field);
+        long s2Offset = unsafe.objectFieldOffset(s2Field);
+
+        Object o = "origin";//new Object();
+        unsafe.putObject(TestClass2.class, s1Offset, o);
+        unsafe.putObject(testClass2, s2Offset, o);
+        System.out.println(TestClass2.s1);
+        System.out.println(testClass2.s2);
+        System.out.println(s1Field.get(TestClass2.class));
+        System.out.println(s2Field.get(testClass2));
+
+        // update string
+        o = "new";//new Object();
+        unsafe.putObject(TestClass2.class, s1Offset, o);
+        unsafe.putObject(testClass2, s2Offset, o);
+        System.out.println(TestClass2.s1);
+        System.out.println(testClass2.s2);
+        System.out.println(s1Field.get(TestClass2.class));
+        System.out.println(s2Field.get(testClass2));
+
+    }
+
+    public static class TestClass2 {
+        public static final Object s1 = new Object();
+        public final        Object s2 = new Object();
+    }
 }
