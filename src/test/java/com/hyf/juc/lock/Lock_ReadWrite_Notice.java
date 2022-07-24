@@ -23,6 +23,7 @@ public class Lock_ReadWrite_Notice {
 
     @Test
     public void block() {
+        // readWriteLock.writeLock().lock(); // must get write lock first ???
         readWriteLock.readLock().lock();
         readWriteLock.writeLock().lock(); // block
         System.out.println(1);
